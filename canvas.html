@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<html>
+<body>
+
+<p>要使用的视频：</p>
+<div id="d1" style="width:100px;height:100px;background: #f00;overflow: hidden">
+    <video style="object-fit: fill" id="video1" x-webkit-airplay="true" x5-video-player-type='h5' webkit-playsinline="true" playsinline="true" x5-video-player-fullscreen='true'  controls width="200" autoplay>
+      <source src="1.mp4" type='video/mp4'>
+    </video>
+</div>
+<p>画布1</p>
+
+<canvas id="myCanvas" width="380" height="505" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+document.body.onclick=function(){
+    console.log("dianji")
+	document.getElementById("video1").play();
+}
+
+var v=document.getElementById("video1");
+var c=document.getElementById("myCanvas");
+ctx=c.getContext('2d');
+var i=null;
+v.addEventListener('play', function() {i=window.setInterval(function() {ctx.drawImage(v,0,0,400,505)},20);},false);
+v.addEventListener('pause',function() {window.clearInterval(i);},false);
+v.addEventListener('ended',function() {clearInterval(i);},false);  
+
+</script>
+
+</body>
+</html>

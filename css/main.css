@@ -59,9 +59,9 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dd{
     width:100%;
 }
 .page-common video{
-    /*width:100%;*/
-    width: 1px;
-    margin: -10%;
+   /* width: 1px;
+    margin: -10%;*/
+    display:none;
 
 }
 #videoCover{
@@ -73,21 +73,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dd{
     display: none;
 }
 /*page1*/
-#page1{
-    display:none;
-}
-/*page2*/
-#page2{
-    display:none;
-}
-/*page3*/
-#page3{
-    display:none;
-}
-/*page4*/
-#page4{
-     display:none;
- }
+
 /*page5*/
 #page5{
     background: #fff url('../assets/images/page5.jpg') no-repeat top right;

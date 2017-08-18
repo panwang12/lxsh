@@ -72,14 +72,19 @@ function getPage0(){
         if(v>160){
             clearInterval(timer)
         }
-        console.log("ww")
         ctx.fillRect(0,0,v,5);
-    },500)
+    },200)
     audio.pause()
     page=0;
     $('#cover').css('display','block');
     $('#main').load('component/page0.html',function(){
         $("#myCanvas").css("display","none")
+        var page1=document.getElementById("page1");
+        var c=document.createElement("canvas");
+        c.id="mCanvas";
+        c.width=window.innerWidth;
+        c.height=window.innerHeight;
+        page1.appendChild(c);
         $('#cover').click(function(){
             $('#cover').css('display','none')
             audio.play()
@@ -90,52 +95,24 @@ function getPage0(){
 }
 
 function getPage1(){
-    //$("#videoCover").css("display","block")
-    $('.page-common').css('display','none');
-    $('#page1').css('display','block');
-    $('video').remove();
-    var ele=' <video id="video1" muted src="assets/videos/1-1.mp4" preload="auto" playsinline="true" webkit-playsinline="true"></video>'
-    $("#page1").append(ele)
     var video=document.getElementById('video1');
-    var firstImg=$('#page1 img:first-child');
-    var lastImg=$('#page1 img:nth-child(2)');
-    video_play(video,firstImg,lastImg,18)
+    video_play(video,18,0)
+    drawVideo(video)
 }
 function getPage2(){
-    //$("#videoCover").css("display","block")
-    $('.page-common').css('display','none');
-    $('video').remove();
-    $('#page2').css('display','block');
-    var ele=' <video id="video2" muted src="assets/videos/2-1.mp4" preload="auto" playsinline="true" webkit-playsinline="true"></video>'
-    $("#page2").append(ele)
     var video=document.getElementById('video2');
-    var firstImg=$('#page2 img:first-child');
-    var lastImg=$('#page2 img:nth-child(2)');
-    video_play(video,firstImg,lastImg,12)
+    video_play(video,12,1)
+    drawVideo(video)
 }
 function getPage3(){
-    //$("#videoCover").css("display","block")
-    $('.page-common').css('display','none');
-    $('video').remove();
-    $('#page3').css('display','block');
-    var ele='<video id="video3" muted src="assets/videos/3-1.mp4" preload="auto" playsinline="true" webkit-playsinline="true"></video>';
-    $("#page3").append(ele)
     var video=document.getElementById('video3');
-    var firstImg=$('#page3 img:first-child');
-    var lastImg=$('#page3 img:nth-child(2)');
-    video_play(video,firstImg,lastImg,9)
+    video_play(video,9,2)
+    drawVideo(video)
 }
 function getPage4(){
-    //$("#videoCover").css("display","block")
-    $('.page-common').css('display','none');
-    $('video').remove();
-    $('#page4').css('display','block');
-    var ele=' <video id="video4" muted src="assets/videos/4-1.mp4" preload="auto" playsinline="true" webkit-playsinline="true"></video>'
-    $("#page4").append(ele)
     var video=document.getElementById('video4');
-    var firstImg=$('#page4 img:first-child');
-    var lastImg=$('#page4 img:nth-child(2)');
-    video_play(video,firstImg,lastImg,11)
+    video_play(video,11,3)
+    drawVideo(video)
 }
 
 function getPage5(){
@@ -178,26 +155,38 @@ function linkTo(url){
     })
 }
 
-function video_play(video,firstImg,lastImg,topTime){
-    video.style.width="1px";
-    firstImg.css('display','block');
-    lastImg.css('display','none');
-    $(".page-common").children("img:odd").css('display','none');
+function video_play(video,topTime,num){
+    var videos=document.querySelectorAll("video");
+    for(var i=0;i<videos.length;i++){
+        if(i!==num){
+            videos[i].pause()
+        }
+    }
     video.currentTime=0;
     video.play();
     video.addEventListener("timeupdate",function(){
-        console.log(video.currentTime);
-        if(video.currentTime>0.5) {
-            firstImg.css('display','none');
-            video.style.width="120%";
-        }
         if(video.currentTime>=topTime){
-            lastImg.css('display','block');
-            video.remove();
-            //$("#videoCover").css("display","none")
-            //video.style.width="1px";
-            //video.pause();
+            video.pause();
         }
     })
+}
+
+function drawVideo(v){
+    var c=document.getElementById("mCanvas");
+    ctx=c.getContext('2d');
+    var cw=window.innerWidth;
+    var ch=window.innerHeight;
+    var timer=null;
+    v.addEventListener('play', function() {
+        timer=window.setInterval(function() {
+            ctx.drawImage(v,0,0,cw,ch)
+        },20);
+    },false);
+    v.addEventListener('pause',function() {
+        window.clearInterval(timer);
+    },false);
+    v.addEventListener('ended',function() {
+        clearInterval(timer);
+    },false);
 }
 
