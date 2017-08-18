@@ -59,7 +59,18 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dd{
     width:100%;
 }
 .page-common video{
-    width:100%;
+    /*width:100%;*/
+    width: 1px;
+    margin: -10%;
+
+}
+#videoCover{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
 }
 /*page1*/
 #page1{
